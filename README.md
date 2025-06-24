@@ -39,5 +39,3 @@ Para compilar e rodar o projeto:
 make
 ./bin/MemoryManagement
 ``` 
-
----
