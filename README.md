@@ -37,9 +37,7 @@ Comparar o número de faltas de página dos algoritmos FIFO e Aging em diferente
 Para compilar e rodar o projeto:
 ```bash
 make
-./bin/MemoryManagement <numero_de_molduras>
-
-Exemplo:
-    ./bin/MemoryManagement 8
+./bin/MemoryManagement
+``` 
 
 ---
