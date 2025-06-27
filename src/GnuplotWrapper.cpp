@@ -16,6 +16,7 @@ void GnuplotWrapper::GenerateGnuplotScript(const std::string& dataFile, const st
     gp << "set title '" << title << "'\n";
     gp << "set xlabel 'Número de Molduras'\n";
     gp << "set xtics 1\n";
+    gp << "set ylabel 'Falta de Páginas'\n";
     gp << "set key outside\n";
     gp << "plot \\\n";
     gp << "    '" << dataFile << "' using 1:2 with linespoints lt rgb 'green' lw 2 title '" << label1 << "', \\\n";

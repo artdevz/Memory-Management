@@ -3,6 +3,7 @@ set output 'plots/fifo_plot.png'
 set title 'Comparação FIFO x Aging'
 set xlabel 'Número de Molduras'
 set xtics 1
+set ylabel 'Falta de Páginas'
 set key outside
 plot \
     'data/output_data.txt' using 1:2 with linespoints lt rgb 'green' lw 2 title 'FIFO', \
