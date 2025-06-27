@@ -5,27 +5,38 @@
 #include "ReferenceGenerator.hpp"
 #include "GnuplotWrapper.hpp"
 
+constexpr int NUM_SIMULATIONS = 10;
+
 int main(int argc, char* argv[]) {
-    auto references = ReferenceGenerator::Generate();
-
     std::vector<int> framesVec = {1, 2, 3, 5, 10, 15};
-    std::vector<int> fifoFaultsVec;
-    std::vector<int> agingFaultsVec;
-
+    std::vector<float> fifoAvgFaultsVec;
+    std::vector<float> agingAvgFaultsVec;
+    
     for (int frames : framesVec) {
-        FIFO fifoSimulator(frames);
-        int fifoFaults = fifoSimulator.Simulate(references);
-        fifoFaultsVec.push_back(fifoFaults);
+        int fifoTotal = 0;
+        int agingTotal = 0;
+        
+        for (int i = 0; i < NUM_SIMULATIONS; i++) {
+            auto references = ReferenceGenerator::Generate();
 
-        Aging agingSimulator(frames);
-        int agingFaults = agingSimulator.Simulate(references);
-        agingFaultsVec.push_back(agingFaults);
+            FIFO fifoSimulator(frames);
+            fifoTotal += fifoSimulator.Simulate(references);
 
-        std::cout << "[INFO] Frames: " << frames << " | FIFO: " << fifoFaults << " | Aging: " << agingFaults << "\n";
+            Aging agingSimulator(frames);
+            agingTotal += agingSimulator.Simulate(references);
+        }
+
+        float fifoAvg = (float)fifoTotal / NUM_SIMULATIONS;
+        float agingAvg = (float)agingTotal / NUM_SIMULATIONS;
+
+        fifoAvgFaultsVec.push_back(fifoAvg);
+        agingAvgFaultsVec.push_back(agingAvg);
+        std::cout << "[INFO] Frames: " << frames << " | FIFO: " << fifoAvg << " | Aging: " << agingAvg << "\n";
+
     }
 
     GnuplotWrapper plotter;
-    plotter.Plot(framesVec, fifoFaultsVec, "FIFO", agingFaultsVec, "Aging", "Comparação FIFO x Aging", "fifo_plot.png");
+    plotter.Plot(framesVec, fifoAvgFaultsVec, "FIFO", agingAvgFaultsVec, "Aging", "Comparação FIFO x Aging", "fifo_plot.png");
 
     return 0;
 }

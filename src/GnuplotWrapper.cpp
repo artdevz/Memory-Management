@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cstdlib>
 
-void GnuplotWrapper::GenerateDataFile(const std::vector<int>& x, const std::vector<int>& y1, const std::vector<int>& y2, const std::string& filePath) {
+void GnuplotWrapper::GenerateDataFile(const std::vector<int>& x, const std::vector<float>& y1, const std::vector<float>& y2, const std::string& filePath) {
     std::ofstream file(filePath);
     for (size_t i = 0; i < x.size(); ++i)
         file << x[i] << " " << y1[i] << " " << y2[i]
@@ -37,9 +37,9 @@ void GnuplotWrapper::OpenPlot(const std::string& plotFile) {
 
 void GnuplotWrapper::Plot(
     const std::vector<int>& x,
-    const std::vector<int>& y1,
+    const std::vector<float>& y1,
     const std::string& label1,
-    const std::vector<int>& y2,
+    const std::vector<float>& y2,
     const std::string& label2,
     const std::string& title,
     const std::string& fileName
